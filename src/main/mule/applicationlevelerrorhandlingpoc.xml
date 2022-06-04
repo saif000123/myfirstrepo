@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="80bdcb0d-daeb-44f3-92a6-b41f0a7d596c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<configuration doc:name="Configuration" doc:id="1646a58d-2448-48ce-a800-93985ee68f6b" defaultErrorHandler-ref="applicationlevelerrorhandlingpocError_Handler" />
+	<error-handler name="applicationlevelerrorhandlingpocError_Handler" doc:id="59daee21-ccac-4fb4-b5a1-be036423fbda" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1d5baf5b-3fd6-4336-8978-834949f6ebeb" >
+			<logger level="INFO" doc:name="Logger" doc:id="d9fde38f-3ad2-45ba-9414-db47a2788431" />
+			<set-payload value="i m azirul bhai" doc:name="Set Payload" doc:id="ec02cbb7-28dd-4c41-8874-c8d9c22b2003" />
+		</on-error-propagate>
+	</error-handler>
+	<flow name="applicationlevelerrorhandlingpocFlow" doc:id="16767e3c-2e5b-4ca6-a493-b47980e7aa85" >
+		<http:listener doc:name="Listener" doc:id="564f0dd0-33be-4979-8702-186b2bc44624" config-ref="HTTP_Listener_config" path="/test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0792ebb4-1cb6-4799-b2c4-df43813c69d4" />
+		<validation:is-null doc:id="187a8e9a-63b2-4daf-838c-5c7d04d3fa0f" value="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="83b2c768-8a72-4f48-9597-66cb59261bbd" />
+	</flow>
+</mule>
